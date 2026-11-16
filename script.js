@@ -209,17 +209,39 @@ function getStock(product) {
 
 
 function normaliseOptionList(value) {
-    if (Array.isArray(value)) return [...new Set(value.map(item => String(item).trim()).filter(Boolean))];
-    if (typeof value !== "string" || !value.trim()) return [];
-    const raw = value.trim();
-    try {
-        const parsed = JSON.parse(raw);
-        if (Array.isArray(parsed)) return [...new Set(parsed.map(item => String(item).trim()).filter(Boolean))];
-    } catch (error) {}
-    return [...new Set(raw.split(/[,;\n]/).map(item => item.trim()).filter(Boolean))];
+    let items = [];
+    if (Array.isArray(value)) {
+        items = value.map(item => String(item).trim()).filter(Boolean);
+    } else if (typeof value === "string" && value.trim()) {
+        const raw = value.trim();
+        try {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed)) items = parsed.map(item => String(item).trim()).filter(Boolean);
+            else items = raw.split(/[,;\n]/).map(item => item.trim()).filter(Boolean);
+        } catch (error) {
+            items = raw.split(/[,;\n]/).map(item => item.trim()).filter(Boolean);
+        }
+    }
+    return [...new Set(items)];
 }
-function getProductSizes(product) { return normaliseOptionList(product?.available_sizes); }
-function getProductColours(product) { return normaliseOptionList(product?.available_colours); }
+
+/* Repair legacy split labels for display and cart validation.
+   This does not change the product records stored in Supabase. */
+function getProductSizes(product) {
+    const sizes = normaliseOptionList(product?.available_sizes);
+    const upper = sizes.map(size => size.toUpperCase());
+
+    if (upper.length === 3 && upper[0] === "MEDIUM" && upper[1] === "TO" && upper[2] === "3XL") {
+        return ["Medium to 3XL"];
+    }
+    if (upper.length === 2 && upper[0] === "FREE" && upper[1] === "SIZES") {
+        return ["Free Size"];
+    }
+    return sizes.map(size => size.replace(/_/g, "–"));
+}
+function getProductColours(product) {
+    return normaliseOptionList(product?.available_colours);
+}
 function getCardVariantSelection(productId) {
     const card = [...document.querySelectorAll(".product-card")].find(element => {
         const button = element.querySelector('[data-action="add"]');
