@@ -881,77 +881,36 @@ function displayProducts(productArray = products) {
     productList.innerHTML = productArray.map(product => {
         const images = getProductImages(product);
         const image = images[0];
-        const stock = getStock(product);
-        const available = stock > 0;
         const id = String(product.id);
-        const sizes = getProductSizes(product);
-        const colours = getProductColours(product);
         const category = String(product.category || "Fashion").trim();
         const description = String(product.description || "").trim();
-        const sizeControl = sizes.length ? `
-            <label class="product-option">
-                <span>Size</span>
-                <select data-variant="size" aria-label="Choose size for ${escapeHTML(product.name)}">
-                    <option value="">Choose size</option>
-                    ${sizes.map(size => `<option value="${escapeHTML(size)}">${escapeHTML(size)}</option>`).join("")}
-                </select>
-            </label>` : "";
-        const colourControl = colours.length ? `
-            <label class="product-option">
-                <span>Colour</span>
-                <select data-variant="colour" aria-label="Choose colour for ${escapeHTML(product.name)}">
-                    <option value="">Choose colour</option>
-                    ${colours.map(colour => `<option value="${escapeHTML(colour)}">${escapeHTML(colour)}</option>`).join("")}
-                </select>
-            </label>` : "";
 
         productImageIndices[id] = 0;
 
         return `
             <article class="product-card lbm-retail-card">
-                <div class="product-image-container lbm-retail-image">
-                    <img src="${escapeHTML(image)}"
-                         alt="${escapeHTML(product.name)}"
-                         class="product-image"
-                         loading="lazy"
-                         data-action="preview-image"
-                         data-id="${escapeHTML(id)}"
-                         aria-label="View ${escapeHTML(product.name)} pictures">
-                    <span class="product-category-tag">${escapeHTML(category)}</span>
-                    ${images.length > 1 ? `
-                        <button type="button" class="gallery-arrow gallery-prev"
-                                data-action="gallery-prev" data-id="${escapeHTML(id)}"
-                                aria-label="Previous product picture">‹</button>
-                        <span class="lbm-image-counter">1 / ${images.length}</span>
-                        <button type="button" class="gallery-arrow gallery-next"
-                                data-action="gallery-next" data-id="${escapeHTML(id)}"
-                                aria-label="Next product picture">›</button>` : ""}
-                </div>
+                <button type="button" class="lbm-product-image-trigger"
+                        data-action="preview-image" data-id="${escapeHTML(id)}"
+                        aria-label="View ${escapeHTML(product.name)} pictures and choose options">
+                    <div class="product-image-container lbm-retail-image">
+                        <img src="${escapeHTML(image)}"
+                             alt="${escapeHTML(product.name)}"
+                             class="product-image"
+                             loading="lazy">
+                        <span class="product-category-tag">${escapeHTML(category)}</span>
+                        ${images.length > 1 ? `
+                            <span class="lbm-image-counter">1 / ${images.length}</span>` : ""}
+                        <span class="lbm-tap-preview-hint">TAP TO VIEW & SELECT</span>
+                    </div>
+                </button>
 
                 <div class="product-info lbm-retail-info">
-                    <p class="product-eyebrow">${escapeHTML(category)}</p>
                     <h3 class="product-card-title" data-action="preview-image"
                         data-id="${escapeHTML(id)}" role="button" tabindex="0">
                         ${escapeHTML(product.name)}
                     </h3>
+                    <p class="product-price">${formatPrice(product.price)}</p>
                     ${description ? `<p class="product-description lbm-card-description">${escapeHTML(description)}</p>` : ""}
-                    <div class="lbm-price-stock-row">
-                        <p class="product-price">${formatPrice(product.price)}</p>
-                        <span class="stock-label ${available ? "in-stock" : "out-of-stock"}">
-                            ${available ? stock + " available" : "Out of stock"}
-                        </span>
-                    </div>
-                    ${sizeControl || colourControl ? `
-                        <div class="product-options-row">${sizeControl}${colourControl}</div>` : ""}
-                    <button type="button" class="add-button lbm-card-add"
-                            data-action="add" data-id="${escapeHTML(id)}"
-                            ${available ? "" : "disabled"}>
-                        ${available ? "ADD TO CART" : "CURRENTLY UNAVAILABLE"}
-                    </button>
-                    <button type="button" class="lbm-view-details"
-                            data-action="preview-image" data-id="${escapeHTML(id)}">
-                        View product pictures and details
-                    </button>
                 </div>
             </article>`;
     }).join("");
@@ -963,7 +922,6 @@ function displayProducts(productArray = products) {
         });
     });
 }
-
 
 /* =====================================================
    14. CHANGE PRODUCT CARD IMAGE
