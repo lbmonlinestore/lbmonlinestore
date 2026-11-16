@@ -1882,3 +1882,23 @@ th {
     font-size: 12px;
     line-height: 1.5;
 }
+
+/* Product preview: keep size, colour and quantity on distinct full-width rows. */
+#lbm-preview-variant-options .lbm-picture-variant-fields {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    width: 100%;
+}
+#lbm-preview-variant-options .lbm-picture-option-label {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 5px;
+    width: 100%;
+    text-align: left;
+}
+#lbm-preview-variant-options .lbm-picture-option-control {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 42px;
+}
