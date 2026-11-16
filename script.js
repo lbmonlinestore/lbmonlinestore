@@ -1442,9 +1442,9 @@ function createImagePreview() {
 
             <div class="lbm-preview-product-selection">
                 <h3>Select Your Pictures</h3>
-                <p>Tap a picture to preview it. Use its checkbox to select or unselect it, just like LBM Lay-Bay.</p>
+                <p>Choose the size, colour and quantity for the picture shown. Use the picture checkboxes to add more pictures with their own options.</p>
                 <p class="lbm-preview-selection-hint">
-                    Select several pictures from this product. Each selected picture has its own size, colour and quantity.
+                    Your selected picture's size, colour and quantity appear below. You can select additional pictures and set their options separately.
                 </p>
                 <p id="lbm-preview-selected-count"
                     class="lbm-preview-selected-count">0 pictures selected</p>
@@ -1546,6 +1546,14 @@ function previewProductImage(productId) {
 
     previewImageIndex =
         productImageIndices[previewProductId] || 0;
+
+    /* Open the preview with its current picture selected so the
+       customer immediately sees the size/colour/quantity controls. */
+    const initiallySelected = getSelectedImages(previewProductId);
+    if (initiallySelected.size === 0) {
+        initiallySelected.add(previewImageIndex);
+        getPictureVariantOptions(product, previewImageIndex);
+    }
 
     createImagePreview();
 
