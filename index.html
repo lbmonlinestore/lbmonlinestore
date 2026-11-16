@@ -17,7 +17,7 @@
 
     <meta name="description" content="Discover stylish clothing, footwear and accessories at LBM Online Shop. Serving customers across Zambia.">
 
-    <link rel="stylesheet" href="style.css?v=two-products-horizontal-20261116">
+    <link rel="stylesheet" href="style.css?v=two-column-grid-fixed-20261116">
 
     <style>
         .lbm-assistant-launcher {
@@ -686,7 +686,7 @@
         <section class="products">
 
             
-            <div class="product-grid" id="product-list">
+            <div class="product-grid" id="product-list" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;gap:12px;width:calc(100% - 20px);max-width:1100px;margin:0 auto;">
                 <p>Loading products...</p>
             </div>
 
@@ -1085,7 +1085,7 @@
     }).catch(error=>console.warn("LBM hero image setting could not load:",error));
 })();
 </script>
-    <script src="script.js?v=preview-options-visible-20261116"></script>
+    <script src="script.js?v=two-column-grid-fixed-20261116"></script>
     <script src="features.js?v=announcement-bell-account-v1"></script>
 
     <script>
