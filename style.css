@@ -1824,3 +1824,61 @@ th {
         object-fit: contain;
     }
 }
+
+
+/* 24. CLEAN PRODUCT CARDS — ALL VARIANT CHOICES LIVE IN PREVIEW */
+.lbm-product-image-trigger {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    text-align: inherit;
+    cursor: zoom-in;
+}
+.lbm-product-image-trigger .lbm-retail-image {
+    position: relative;
+    overflow: hidden;
+}
+.lbm-product-image-trigger .product-image {
+    display: block;
+    width: 100%;
+    cursor: zoom-in;
+}
+.lbm-tap-preview-hint {
+    position: absolute;
+    left: 50%;
+    bottom: 10px;
+    transform: translateX(-50%);
+    padding: 6px 10px;
+    border-radius: 20px;
+    background: rgba(8,8,8,.78);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .6px;
+    white-space: nowrap;
+}
+.lbm-retail-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+}
+.lbm-retail-info .product-card-title {
+    margin: 0;
+    cursor: pointer;
+}
+.lbm-retail-info .product-price {
+    margin: 0;
+    color: #94751e;
+    font-size: 17px;
+    font-weight: 850;
+}
+.lbm-retail-info .lbm-card-description {
+    margin: 0;
+    color: #696969;
+    font-size: 12px;
+    line-height: 1.5;
+}
