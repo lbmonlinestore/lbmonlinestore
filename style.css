@@ -1902,3 +1902,34 @@ th {
     width: 100%;
     min-height: 42px;
 }
+
+
+/* =====================================================
+   23. PRODUCT GRID — TWO SIDE-BY-SIDE CARDS AT ALL SIZES
+   Test branch only
+===================================================== */
+#products .product-grid,
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 14px;
+    width: min(100% - 24px, 900px);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#products .product-grid > .product-card,
+.product-grid > .product-card {
+    min-width: 0;
+}
+
+@media (max-width: 360px) {
+    #products .product-grid,
+    .product-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: calc(100% - 16px);
+        gap: 8px;
+    }
+}
